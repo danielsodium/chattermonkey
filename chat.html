@@ -4,81 +4,82 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="twitch.css">
+    <script src="https://kit.fontawesome.com/781328e553.js" crossorigin="anonymous"></script>
+    <title>chattermonkey</title>
+
     
 </head>
 <body>
     <div class="header" id="myHeader">
-        <h2 id="tiktokViewers">0 viewers</h2>
+            <h2 id="tiktokViewers">0<i class="fa-solid fa-user"></i></h2>
     </div>
     <ul id="chat">
         <h1>Chat</h1>
     </ul>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-    var socket = io();
-    var chat = document.getElementById('chat');
-    var viewCount = document.getElementById('tiktokViewers');
-
-    socket.on('chat', function(info) {
-        var item = document.createElement('li');
-
-        if (info.source == 'twitch') {
-            if (info.type == "chat") {
-                item.innerHTML = `<p><b class='twitch'>${info.username}</b>: ${info.message}</p>`;
-            } else if (info.type == "cheer") {
-                item.innerHTML = `<p class="gift"><b class='twitch'>${info.username}</b> cheered with ${info.bits} bits!<br> ${info.message}</p>`;
-            } else if (info.type == "ban") {
-                item.innerHTML = `<p><b class='twitch'>${info.username}</b><b class="ban"> was banned.</b></p>`;
-            } else if (info.type == "resub") {
-                item.innerHTML = `<p class="gift"><b class='twitch'>${info.username}</b> resubscribed!</p>`;
-            } else if (info.type == "raid") {
-                item.innerHTML = `<p class="gift"><b class='twitch'>${info.username}</b> RAIDED THE STREAM with ${info.message} viewers!</p>`;
-            } else if (info.type == "gift") {
-                item.innerHTML = `<p class="gift"><b class='twitch'>${info.username}</b> gifted ${info.number} subs!</p>`;
-            } else if (info.type == "sub") {
-                item.innerHTML = `<p class="gift"><b class='twitch'>${info.username}</b> subscribed!</p>`;
-            } 
-        }
-        else if (info.source == 'tiktok') {
-            if (info.type == "chat") {
-                item.innerHTML = `<p><b class='tiktok'>${info.username}</b>: ${info.message}</p>`;
-            } else if (info.type == "join") {
-                item.innerHTML = (`<p><b class='tiktok'>${info.username}</b><b class='join'> joined</b></p>`);
-            } else if (info.type == "like") {
-                item.innerHTML = (`<p><b class='tiktok'>${info.username}</b><b class='like'> liked the stream</b></p>`);
-            } else if (info.type == "share") {
-                item.innerHTML = (`<p><b class='tiktok'>${info.username}</b><b class='share'> shared the stream</b></p>`);
-            } else if (info.type == "sub") {
-                item.innerHTML = (`<p><b class='tiktok'>${info.username}</b><b class='subscribe'> subscribed</b></p>`);
-            } else if (info.type == "emote") {
-                item.innerHTML = (`<p><b class='tiktok'>${info.username}</b><b class='subscribe'> emoted</b><img src=${info.image}></img></p>`);
-            } else if (info.type == "gift") {
-                item.innerHTML = `<p class='gift'>
-                    <b class='tiktok'>${info.username}</b> sent a ${info.gift.name} gift!</p>
-                    <table>
-                    <tr>
-                        <td><img class="gifticon" src="${info.gift.image}"></td>
-                        <td>
-                            <span>Name: <b>${info.gift.name}</b><br>
-                            <span>Repeat: x${info.gift.repeat}</b><span><br>
-                            <span>Cost: <b>${(info.gift.cost * info.gift.repeat).toLocaleString()} Diamonds</b><span>
-                        </td>
-                    </tr>
-                </table>`;
-            } else if (info.type == "viewers") {
-                viewCount.innerText = `${info.number} viewers`;
+    <script>var socket = io();
+        var chat = document.getElementById('chat');
+        var viewCount = document.getElementById('tiktokViewers');
+        
+        socket.on('chat', function(info) {
+            var item = document.createElement('li');
+        
+            if (info.source == 'twitch') {
+                if (info.type == "chat") {
+                    item.innerHTML = `<p><b class='twitch'>${info.username}</b>: ${info.message}</p>`;
+                } else if (info.type == "cheer") {
+                    item.innerHTML = `<p class="gift"><b class='twitch'>${info.username}</b> cheered with ${info.bits} bits!<br> ${info.message}</p>`;
+                } else if (info.type == "ban") {
+                    item.innerHTML = `<p><b class='twitch'>${info.username}</b><b class="ban"> was banned.</b></p>`;
+                } else if (info.type == "resub") {
+                    item.innerHTML = `<p class="gift"><b class='twitch'>${info.username}</b> resubscribed!</p>`;
+                } else if (info.type == "raid") {
+                    item.innerHTML = `<p class="gift"><b class='twitch'>${info.username}</b> RAIDED THE STREAM with ${info.message} viewers!</p>`;
+                } else if (info.type == "gift") {
+                    item.innerHTML = `<p class="gift"><b class='twitch'>${info.username}</b> gifted ${info.number} subs!</p>`;
+                } else if (info.type == "sub") {
+                    item.innerHTML = `<p class="gift"><b class='twitch'>${info.username}</b> subscribed!</p>`;
+                } 
             }
-        }
-        chat.appendChild(item);
-        
-        // Scroll the bottom only if previously at bottom
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight || info.type == "gift") {
-            window.scrollTo(0, document.body.scrollHeight);
-        }
-        
-    });
-
+            else if (info.source == 'tiktok') {
+                if (info.type == "chat") {
+                    item.innerHTML = `<p><b class='tiktok'>${info.username}</b>: ${info.message}</p>`;
+                } else if (info.type == "join") {
+                    item.innerHTML = (`<p><b class='tiktok'>${info.username}</b><b class='join'> joined</b></p>`);
+                } else if (info.type == "like") {
+                    item.innerHTML = (`<p><b class='tiktok'>${info.username}</b><b class='like'> liked the stream</b></p>`);
+                } else if (info.type == "share") {
+                    item.innerHTML = (`<p><b class='tiktok'>${info.username}</b><b class='share'> shared the stream</b></p>`);
+                } else if (info.type == "sub") {
+                    item.innerHTML = (`<p><b class='tiktok'>${info.username}</b><b class='subscribe'> subscribed</b></p>`);
+                } else if (info.type == "emote") {
+                    item.innerHTML = (`<p><b class='tiktok'>${info.username}</b><b class='subscribe'> emoted</b><img src=${info.image}></img></p>`);
+                } else if (info.type == "gift") {
+                    item.innerHTML = `<p class='gift'>
+                        <b class='tiktok'>${info.username}</b> sent a ${info.gift.name} gift!</p>
+                        <table>
+                        <tr>
+                            <td><img class="gifticon" src="${info.gift.image}"></td>
+                            <td>
+                                <span>Name: <b>${info.gift.name}</b><br>
+                                <span>Repeat: x${info.gift.repeat}</b><span><br>
+                                <span>Cost: <b>${(info.gift.cost * info.gift.repeat).toLocaleString()} Diamonds</b><span>
+                            </td>
+                        </tr>
+                    </table>`;
+                } else if (info.type == "viewers") {
+                    viewCount.innerText = `${info.number} <i class="fa-solid fa-user"></i>`;
+                }
+            }
+            chat.appendChild(item);
+            
+            // Scroll the bottom only if previously at bottom
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight || info.type == "gift") {
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+            
+        });
     </script>
     <script>
         // When the user scrolls the page, execute myFunction

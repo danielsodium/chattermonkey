@@ -8,6 +8,14 @@ body {
     background-color: #19181A;
 }
 
+i {
+    margin-left: 10px;
+}
+
+p {
+    font-size: 14pt;
+}
+
 ul {
     margin-top: 40px;
     list-style-type: none;
@@ -15,7 +23,7 @@ ul {
 
 /* Style the header */
 .header {
-    padding: 5px 30px;
+    padding: 5px 40px;
     background: #19181A;
     color: #f1f1f1;
 }
